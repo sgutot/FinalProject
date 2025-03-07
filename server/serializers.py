@@ -10,4 +10,4 @@ class UserSerializer(serializers.ModelSerializer):
 class PetSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Pet
-        fields = ('__all__')
+        fields = ('name', 'type')

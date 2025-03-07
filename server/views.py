@@ -43,9 +43,7 @@ def test_token(request):
     return Response("passed for {}".format(request.user.email))
 
 
-@api_view(['GET'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
+
 class create_pet(generics.ListCreateAPIView):
     serializer_class = PetSerializer
 
