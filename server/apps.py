@@ -1,7 +1,5 @@
 from django.apps import AppConfig
 
-
-class BaseConfig(AppConfig):
+class ServerConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'base'
-
+    name = 'server' 

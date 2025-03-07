@@ -3,10 +3,11 @@ from rest_framework.response import Response
 from django.shortcuts import render
 
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, PetSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User
+from rest_framework import generics
+from .models import User, Pet
 
 from django.shortcuts import get_object_or_404
 
@@ -40,3 +41,18 @@ from rest_framework.permissions import IsAuthenticated
 @permission_classes([IsAuthenticated])
 def test_token(request):
     return Response("passed for {}".format(request.user.email))
+
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+class create_pet(generics.ListCreateAPIView):
+    serializer_class = PetSerializer
+
+    def get_queryset(self):
+        queryset = Pet.objects.all()
+
+
+class pet_detail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = PetSerializer
+    queryset = Pet.objects.all()

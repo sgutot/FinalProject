@@ -17,11 +17,13 @@ Including another URLconf
 from django.urls import re_path
 from django.urls import include, path
 from . import views
-
+from .views import create_pet, pet_detail
 urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     re_path('login', views.login),
     re_path('signup', views.signup),
     re_path('test_token', views.test_token),
-    path('paw_auth/', include('paw_auth.urls'))
+    path('paw_auth/', include('paw_auth.urls')),
+    path('create_pet/', create_pet),
+    path('pet_detail/', pet_detail.as_view()),
 ]
