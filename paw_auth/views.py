@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework import generics
 from .models import User, Pet
+from rest_framework.views import APIView
 
 from django.shortcuts import get_object_or_404
 
@@ -43,9 +44,6 @@ def test_token(request):
     return Response("passed for {}".format(request.user.email))
 
 
-@api_view(['GET'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
 class create_pet(generics.ListCreateAPIView):
     serializer_class = PetSerializer
 
@@ -56,3 +54,12 @@ class create_pet(generics.ListCreateAPIView):
 class pet_detail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PetSerializer
     queryset = Pet.objects.all()
+
+
+class petImage(APIView):
+    def get(self, request, *args, **kwargs):
+        uploads = Pet.objects.all()
+        serializer = PetSerializer(uploads, comtext = {'request':request}, may=True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+
+

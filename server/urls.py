@@ -17,7 +17,9 @@ Including another URLconf
 from django.urls import re_path
 from django.urls import include, path
 from . import views
-from .views import create_pet, pet_detail
+from .views import create_pet, pet_detail, petImage
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
@@ -26,5 +28,6 @@ urlpatterns = [
     re_path('test_token', views.test_token),
     path('paw_auth/', include('paw_auth.urls')),
     path('create_pet/', create_pet.as_view()),
-    path('pet_detail/', pet_detail.as_view()),
+    path('pet_detail/<int:pk>', pet_detail.as_view()),
+    path('uploads/', petImage.as_view(),),
 ]
