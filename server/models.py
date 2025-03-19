@@ -10,6 +10,9 @@ class Pet(models.Model):
     type = models.CharField(max_length=30)
     DisplayIcon = models.ImageField(upload_to ='uploads/')
 
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=30)
     numGrams = models.IntegerField() 

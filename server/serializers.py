@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 class PetSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Pet
-        fields = '__all__'
+        fields = ('__all__')
 
         def get_photo_urls(self, obj):
             request = self.context.get('request')

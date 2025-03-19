@@ -28,6 +28,6 @@ urlpatterns = [
     re_path('test_token', views.test_token),
     path('paw_auth/', include('paw_auth.urls')),
     path('create_pet/', create_pet.as_view()),
-    path('pet_detail/<int:pk>', pet_detail.as_view()),
+    path('pet_detail/<int:pk>/', pet_detail.as_view()),
     path('uploads/', petImage.as_view(),),
 ]

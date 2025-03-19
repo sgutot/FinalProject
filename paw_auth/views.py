@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 
 from django.shortcuts import get_object_or_404
 
+
 @api_view(['POST'])
 def login(request):
     user= get_object_or_404(User, username=request.data['username'])
@@ -20,6 +21,7 @@ def login(request):
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(instance=user)
     return Response({"token": token.key, "user": serializer.data})
+
 
 @api_view(['POST'])
 def signup(request):
@@ -33,9 +35,11 @@ def signup(request):
         return Response({"token": token.key, "user": serializer.data})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -49,6 +53,10 @@ class create_pet(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Pet.objects.all()
+        User = self.request.query_params.get('User')
+        if User is not None:
+            queryset = queryset.filter(User)
+        return queryset
 
 
 class pet_detail(generics.RetrieveUpdateDestroyAPIView):

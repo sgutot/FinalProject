@@ -16,7 +16,7 @@ from django.shortcuts import get_object_or_404
 def login(request):
     user= get_object_or_404(User, username=request.data['username'])
     if not user.check_password(request.data['password']):
-        return Response({"detail": "Not foumd."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(instance=user)
     return Response({"token": token.key, "user": serializer.data})
@@ -49,17 +49,25 @@ class create_pet(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Pet.objects.all()
+        User = self.request.query_params.get('User')
+        if User is not None:
+            queryset = queryset.filter(User)
+        return queryset
 
 
 class pet_detail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PetSerializer
     queryset = Pet.objects.all()
+    lookup_field = 'pk'
 
 class petImage(APIView):
     def get(self, request, *args, **kwargs):
         uploads = Pet.objects.all()
-        serializer = PetSerializer(uploads, comtext = {'request':request}, may=True)
+        serializer = PetSerializer(uploads, context = {'request':request}, many=True)
         return Response(serializer.data, status = status.HTTP_200_OK)
+    
+        
+
 
 
 
