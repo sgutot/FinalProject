@@ -3,12 +3,18 @@ from rest_framework.response import Response
 from django.shortcuts import render
 
 
-from .serializers import UserSerializer, PetSerializer
+from .serializers import UserSerializer, PetSerializer, ProductSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework import generics
-from .models import User, Pet
+from django.contrib.auth.models import User
+from .models import Pet, Product
 from rest_framework.views import APIView
+
+import cv2
+import numpy as np
+from pyzbar.pyzbar import decode
+
 
 from django.shortcuts import get_object_or_404
 
@@ -66,8 +72,30 @@ class petImage(APIView):
         serializer = PetSerializer(uploads, context = {'request':request}, many=True)
         return Response(serializer.data, status = status.HTTP_200_OK)
     
+class product_name(generics.ListCreateAPIView):
+    serializer_class = ProductSerializer   
+    queryset = Product.objects.all()    
+
+class product_frontPicture(APIView):
+    def get(self, request, *args, **kwargs):
+
+        uploads = Product.objects.all
+        serializer= ProductSerializer(uploads, context = {'request':request}, many=True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+
+class product_scan(APIView):
+    cap = cv2.VideoCapture(0)
+    cap.set(3,640)
+    cap.set(4,480)
+
+    while cap.isOpened():
+        success, frame = cap.read()
+        for barcode in decode(uploads):
+            myData = barcode.data.decode('utf-8')
+
+        cv2.imshow('Result', frame)
+        cv2.waitKey(1)
+
+
         
-
-
-
 
