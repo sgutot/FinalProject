@@ -11,10 +11,7 @@ from django.contrib.auth.models import User
 from .models import Pet, Product
 from rest_framework.views import APIView
 
-import cv2
-import numpy as np
-from pyzbar.pyzbar import decode
-
+import re
 
 from django.shortcuts import get_object_or_404
 
@@ -78,24 +75,26 @@ class product_name(generics.ListCreateAPIView):
 
 class product_frontPicture(APIView):
     def get(self, request, *args, **kwargs):
-
         uploads = Product.objects.all
         serializer= ProductSerializer(uploads, context = {'request':request}, many=True)
         return Response(serializer.data, status = status.HTTP_200_OK)
 
-class product_scan(APIView):
-    cap = cv2.VideoCapture(0)
-    cap.set(3,640)
-    cap.set(4,480)
+#  ~^0^~
+def search_for_toxic_ingredients(product_ingredients):
+    toxic_lists = []
 
-    while cap.isOpened():
-        success, frame = cap.read()
-        for barcode in decode(uploads):
-            myData = barcode.data.decode('utf-8')
+    for toxic in toxic_ingredients:
+        pattern = re.compile(r'toxic_lists')
+        if pattern.search(product_ingredients):
+            toxic_lists.append(toxic)
 
-        cv2.imshow('Result', frame)
-        cv2.waitKey(1)
+    return toxic_lists
 
+
+
+
+    
+    
 
         
 

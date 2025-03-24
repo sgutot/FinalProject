@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import User, Pet, Product
+from django.contrib.auth.models import User
+from .models import Pet, Product
 from rest_framework import status
 from rest_framework.response import Response
 

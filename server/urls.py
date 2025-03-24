@@ -16,16 +16,19 @@ Including another URLconf
 """
 from django.urls import re_path
 from django.urls import include, path
+
+import paw_auth.views
 from . import views
-from .views import create_pet, pet_detail, petImage, product_scan, product_name, product_frontPicture
+from .views import create_pet, pet_detail, petImage, search_for_toxic_ingredients
+from .views import login, signup
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     #Account
     path("accounts/", include("django.contrib.auth.urls")),
-    re_path('login', views.login),
     re_path('signup', views.signup),
+    re_path('login', views.login),
     re_path('test_token', views.test_token),
     path('paw_auth/', include('paw_auth.urls')),
 
@@ -35,8 +38,6 @@ urlpatterns = [
     path('uploads/', petImage.as_view(),),
 
     #Scan
-    path('product_scan/', product_scan, name='product_scan'),
-    path('products/', product_name.as_view(), name='product_name'),
-
+    path('search_for_toxic_ingredients/', views.search_for_toxic_ingredients),
 
 ]

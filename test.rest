@@ -17,9 +17,3 @@ Content-type: application/json
 Authorization: Token 47d4d7f57aeac62d536bc128814d797deae07aca
 
 {}
-
-###
-GET http://127.0.0.1:8000/pet_detail
-Content-Type: application/json
-
-{"Name": "laya", "Type": "Cat"}

@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from django.shortcuts import render
 
 
-from .serializers import UserSerializer, PetSerializer
+from .serializers import UserSerializer, PetSerializer, ProductSerializer 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework import generics
-from .models import User, Pet
+from .models import User, Pet, Product
 from rest_framework.views import APIView
 
 from django.shortcuts import get_object_or_404
@@ -69,5 +69,26 @@ class petImage(APIView):
         uploads = Pet.objects.all()
         serializer = PetSerializer(uploads, comtext = {'request':request}, may=True)
         return Response(serializer.data, status = status.HTTP_200_OK)
+    
+class product_name(generics.ListCreateAPIView):
+    serializer_class = ProductSerializer   
+    queryset = Product.objects.all()    
+
+class product_frontPicture(APIView):
+    def get(self, request, *args, **kwargs):
+        uploads = Product.objects.all
+        serializer= ProductSerializer(uploads, context = {'request':request}, many=True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+
+#  ~^0^~
+def search_for_toxic_ingredients(product_ingredients):
+    toxic_lists = []
+
+    for toxic in toxic_ingredients:
+        pattern = re.compile(r'toxic_lists')
+        if pattern.search(product_ingredients):
+            toxic_lists.append(toxic)
+
+    return toxic_lists 
 
 
