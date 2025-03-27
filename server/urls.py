@@ -18,9 +18,11 @@ from django.urls import re_path
 from django.urls import include, path
 
 import paw_auth.views
-from . import views
-from .views import create_pet, pet_detail, petImage, search_for_toxic_ingredients
+from .import views
 from .views import login, signup
+from .views import create_pet, pet_detail, petImage
+from .views import search_for_toxic_ingredients
+from .views import NewProductName, NewProductDescription, NewProductFrontPicture, NewProducIngredientsPicture, NewProducRequester
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -39,5 +41,13 @@ urlpatterns = [
 
     #Scan
     path('search_for_toxic_ingredients/', views.search_for_toxic_ingredients),
+
+    #New Product
+    path('NewProductName/', NewProductName.as_view()),
+    path('NewProductDescription/', NewProductDescription.as_view()),
+    path('uploads/', NewProductFrontPicture.as_view(),),
+    path('uploads/', NewProducIngredientsPicture.as_view(),),
+    path('NewProducRequester/', NewProducRequester.as_view()),
+    # path('NewProduct_detail/<int:pk>/', NewProduct_detail.as_view()),
 
 ]

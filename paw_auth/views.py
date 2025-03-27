@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from django.shortcuts import render
 
 
-from .serializers import UserSerializer, PetSerializer, ProductSerializer 
+from .serializers import UserSerializer, PetSerializer, ProductSerializer, ProductRequestSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework import generics
-from .models import User, Pet, Product
+from .models import User, Pet, Product, ProductRequest
 from rest_framework.views import APIView
 
 from django.shortcuts import get_object_or_404
@@ -90,5 +90,38 @@ def search_for_toxic_ingredients(product_ingredients):
             toxic_lists.append(toxic)
 
     return toxic_lists 
+
+# New Product
+class NewProductName(generics.ListCreateAPIView):
+    serializer_class = ProductRequestSerializer
+    queryset = ProductRequest.objects.all()
+        
+    
+class NewProductDescription(generics.ListAPIView):
+    serializer_class = ProductRequestSerializer
+    queryset = ProductRequest.objects.all()
+
+class NewProductFrontPicture(APIView):
+    def get(self, request, *args, **kwargs):
+        uploads = ProductRequest.objects.all()
+        serializer = ProductRequestSerializer(uploads, context = {'request':request}, many=True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+    
+class NewProducIngredientsPicture(APIView):
+    def get(self, request, *args, **kwargs):
+        uploads = ProductRequest.objects.all()
+        serializer = ProductRequestSerializer(uploads, context = {'request':request}, many=True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+    
+class NewProducRequester(generics.ListAPIView):
+    serializer_class = ProductRequestSerializer
+
+    def get_queryset(self):
+        queryset = ProductRequest.objects.all()
+        User = self.request.query_params.get('User')
+        if User is not None:
+            queryset = queryset.filter(User)
+        return queryset
+    
 
 

@@ -3,18 +3,20 @@ from rest_framework.response import Response
 from django.shortcuts import render
 
 
-from .serializers import UserSerializer, PetSerializer, ProductSerializer
+from .serializers import UserSerializer, PetSerializer, ProductSerializer, ProductRequestSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework import generics
 from django.contrib.auth.models import User
-from .models import Pet, Product
+from .models import Pet, Product, ProductRequest
 from rest_framework.views import APIView
 
 import re
 
 from django.shortcuts import get_object_or_404
 
+
+# login and signup
 @api_view(['POST'])
 def login(request):
     user= get_object_or_404(User, username=request.data['username'])
@@ -45,8 +47,10 @@ from rest_framework.permissions import IsAuthenticated
 @permission_classes([IsAuthenticated])
 def test_token(request):
     return Response("passed for {}".format(request.user.email))
+ 
 
 
+# Pet
 class create_pet(generics.ListCreateAPIView):
     serializer_class = PetSerializer
 
@@ -69,6 +73,9 @@ class petImage(APIView):
         serializer = PetSerializer(uploads, context = {'request':request}, many=True)
         return Response(serializer.data, status = status.HTTP_200_OK)
     
+
+
+# Product 
 class product_name(generics.ListCreateAPIView):
     serializer_class = ProductSerializer   
     queryset = Product.objects.all()    
@@ -79,7 +86,8 @@ class product_frontPicture(APIView):
         serializer= ProductSerializer(uploads, context = {'request':request}, many=True)
         return Response(serializer.data, status = status.HTTP_200_OK)
 
-#  ~^0^~
+
+#  Scan
 def search_for_toxic_ingredients(product_ingredients):
     toxic_lists = []
 
@@ -92,9 +100,39 @@ def search_for_toxic_ingredients(product_ingredients):
 
 
 
+# New Product
+class NewProductName(generics.ListCreateAPIView):
+    serializer_class = ProductRequestSerializer
+    queryset = ProductRequest.objects.all()
+          
+class NewProductDescription(generics.ListAPIView):
+    serializer_class = ProductRequestSerializer
+    queryset = ProductRequest.objects.all()
 
+class NewProductFrontPicture(APIView):
+    def get(self, request, *args, **kwargs):
+        uploads = ProductRequest.objects.all()
+        serializer = ProductRequestSerializer(uploads, context = {'request':request}, many=True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
     
+class NewProducIngredientsPicture(APIView):
+    def get(self, request, *args, **kwargs):
+        uploads = ProductRequest.objects.all()
+        serializer = ProductRequestSerializer(uploads, context = {'request':request}, many=True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
     
+class NewProducRequester(generics.ListAPIView):
+    serializer_class = ProductRequestSerializer
 
-        
+    def get_queryset(self):
+        queryset = ProductRequest.objects.all()
+        User = self.request.query_params.get('User')
+        if User is not None:
+            queryset = queryset.filter(User)
+        return queryset
+    
+# class NewProduct_detail(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = NewProductSerializer
+#     queryset = ProductRequest.objects.all()
+#     lookup_field = 'pk'      
 
