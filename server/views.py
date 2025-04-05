@@ -101,27 +101,27 @@ def search_for_toxic_ingredients(product_ingredients):
 
 
 # New Product
-class NewProductName(generics.ListCreateAPIView):
+class new_product_name(generics.ListCreateAPIView):
     serializer_class = ProductRequestSerializer
     queryset = ProductRequest.objects.all()
           
-class NewProductDescription(generics.ListAPIView):
+class new_product_description(generics.ListAPIView):
     serializer_class = ProductRequestSerializer
     queryset = ProductRequest.objects.all()
 
-class NewProductFrontPicture(APIView):
+class new_product_front_picture(APIView):
     def get(self, request, *args, **kwargs):
         uploads = ProductRequest.objects.all()
         serializer = ProductRequestSerializer(uploads, context = {'request':request}, many=True)
         return Response(serializer.data, status = status.HTTP_200_OK)
     
-class NewProducIngredientsPicture(APIView):
+class new_product_ingredients_picture(APIView):
     def get(self, request, *args, **kwargs):
         uploads = ProductRequest.objects.all()
         serializer = ProductRequestSerializer(uploads, context = {'request':request}, many=True)
-        return Response(serializer.data, status = status.HTTP_200_OK)
+        return Response(serializer.data, status = status.HTTP_200_OK) 
     
-class NewProducRequester(generics.ListAPIView):
+class new_product_requester(generics.ListAPIView):
     serializer_class = ProductRequestSerializer
 
     def get_queryset(self):
@@ -131,8 +131,8 @@ class NewProducRequester(generics.ListAPIView):
             queryset = queryset.filter(User)
         return queryset
     
-# class NewProduct_detail(generics.RetrieveUpdateDestroyAPIView):
-#     serializer_class = NewProductSerializer
-#     queryset = ProductRequest.objects.all()
-#     lookup_field = 'pk'      
+class new_product_detail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ProductRequestSerializer
+    queryset = ProductRequest.objects.all()
+    lookup_field = 'pk'
 

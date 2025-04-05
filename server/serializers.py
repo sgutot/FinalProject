@@ -18,8 +18,7 @@ class PetSerializer(serializers.ModelSerializer):
         def get_photo_urls(self, obj):
             request = self.context.get('request')
             photo_url = obj.fingerprint.url
-            return request.build_absolute_uri(photo_url)
-        
+            return request.build_absolute_uri(photo_url)  
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta(object):
@@ -27,9 +26,10 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 class ProductRequestSerializer(serializers.ModelSerializer):
+    requestDate  = serializers.DateTimeField(format="%d-%m-%Y")
     class Meta(object):
         model = ProductRequest
-        fields = ['name', 'descrption', 'frontPicture', 'ingredientsPicture', 'requester']
+        fields = ('name', 'descrption', 'frontPicture', 'ingredientsPicture', 'requester', 'requestDate')
 
         def get_front_photo_urls(self, obj):
             request = self.context.get('request')
@@ -40,4 +40,5 @@ class ProductRequestSerializer(serializers.ModelSerializer):
             request = self.context.get('request')
             photo_url = obj.fingerprint.url
             return request.build_absolute_uri(photo_url)
+            
         

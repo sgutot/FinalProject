@@ -22,7 +22,7 @@ from .import views
 from .views import login, signup
 from .views import create_pet, pet_detail, petImage
 from .views import search_for_toxic_ingredients
-from .views import NewProductName, NewProductDescription, NewProductFrontPicture, NewProducIngredientsPicture, NewProducRequester
+from .views import new_product_name, new_product_description, new_product_front_picture, new_product_ingredients_picture, new_product_requester, new_product_detail
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -43,11 +43,11 @@ urlpatterns = [
     path('search_for_toxic_ingredients/', views.search_for_toxic_ingredients),
 
     #New Product
-    path('NewProductName/', NewProductName.as_view()),
-    path('NewProductDescription/', NewProductDescription.as_view()),
-    path('uploads/', NewProductFrontPicture.as_view(),),
-    path('uploads/', NewProducIngredientsPicture.as_view(),),
-    path('NewProducRequester/', NewProducRequester.as_view()),
-    # path('NewProduct_detail/<int:pk>/', NewProduct_detail.as_view()),
+    path('new_product_name/', new_product_name.as_view()),
+    path('new_product_description/', new_product_description.as_view()),
+    path('uploads/', new_product_front_picture.as_view(),),
+    path('uploads/', new_product_ingredients_picture.as_view(),),
+    path('new_product_requester/', new_product_requester.as_view()),
+    path('new_product_detail/', new_product_detail.as_view),
 
 ]
