@@ -6,7 +6,7 @@ from django.shortcuts import render
 from .serializers import UserSerializer, PetSerializer, ProductSerializer, ProductRequestSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework import generics
+from rest_framework import generics, permissions, status
 from django.contrib.auth.models import User
 from .models import Pet, Product, ProductRequest
 from rest_framework.views import APIView
@@ -135,4 +135,21 @@ class new_product_detail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProductRequestSerializer
     queryset = ProductRequest.objects.all()
     lookup_field = 'pk'
+
+class status_new_product(generics.UpdateAPIView):
+    queryset = ProductRequest.objects.all()
+    serializer_class = ProductRequestSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+    def approve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.status != ProductRequest.PENDING:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        instance.status = ProductRequest.APPROVE
+        instance.save()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+
 

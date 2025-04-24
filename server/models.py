@@ -32,7 +32,7 @@ class ProductRequest(models.Model):
     frontPicture =  models.ImageField(upload_to ='uploads/')
     ingredientsPicture =  models.ImageField(upload_to ='uploads/')
     requester = models.CharField(max_length=30)
-    requestDate =  models.DateTimeField()
+    requestDate =  models.DateTimeField(auto_now_add=True)
     PENDING = "PD"
     APPROVE = "AP"
     DENIED = "DD"
@@ -41,4 +41,4 @@ class ProductRequest(models.Model):
         APPROVE: "Approve",
         DENIED: "Denied"
     }
-    status = models.CharField(max_length=30)
+    status = models.CharField(max_length=30, choices=STATUS, default=PENDING)
