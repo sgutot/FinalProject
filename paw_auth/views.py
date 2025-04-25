@@ -81,15 +81,18 @@ class product_frontPicture(APIView):
         return Response(serializer.data, status = status.HTTP_200_OK)
 
 #  ~^0^~
-def search_for_toxic_ingredients(product_ingredients):
-    toxic_lists = []
+import re
+
+def search_for_toxic_ingredients(product_ingredients, toxic_ingredients):
+    found_toxics = []
 
     for toxic in toxic_ingredients:
-        pattern = re.compile(r'toxic_lists')
+        pattern = re.compile(r'\b{}\b'.format(re.escape(toxic)), re.IGNORECASE)
         if pattern.search(product_ingredients):
-            toxic_lists.append(toxic)
+            found_toxics.append(toxic)
 
-    return toxic_lists 
+    return found_toxics
+
 
 # New Product
 class NewProductName(generics.ListCreateAPIView):
