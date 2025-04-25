@@ -29,13 +29,13 @@ from django.conf.urls.static import static
 urlpatterns = [
     #Account
     path("accounts/", include("django.contrib.auth.urls")),
-    re_path('signup', views.signup),
-    re_path('login', views.login),
-    re_path('test_token', views.test_token),
+    re_path('signup', views.signup, name="signup"),
+    re_path('login', views.login, name="login"),
+    re_path('test_token', views.test_token, name="test_token"),
     path('paw_auth/', include('paw_auth.urls')),
 
     #Pet
-    path('create_pet/', create_pet.as_view()),
+    path('create_pet/', create_pet.as_view(), name="create_pet"),
     path('pet_detail/<int:pk>/', pet_detail.as_view()),
     path('uploads/', petImage.as_view(),),
 
@@ -43,7 +43,7 @@ urlpatterns = [
     path('search_for_toxic_ingredients/', views.search_for_toxic_ingredients),
 
     #New Product
-    path('new_product_name/', new_product_name.as_view()),
+    path('new_product_name/', new_product_name.as_view(), name="new_product_name"),
     path('new_product_description/', new_product_description.as_view()),
     path('uploads/', new_product_front_picture.as_view(),),
     path('uploads/', new_product_ingredients_picture.as_view(),),
