@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# LOGINSIGNUP
-=======
 # Pawdible Backend
 
 The backend that is used in the Pawdible project. The Pawdible project is an app that helps pet owners determine if a treat is edible for their pets by simply scanning the barcode of the treat in question.
@@ -29,7 +26,3 @@ Now that we have applied the migrations, we can now run the server with:
 ```
 python manage.py runserver
 ```
-
-
-
->>>>>>> master
