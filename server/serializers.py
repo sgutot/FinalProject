@@ -4,6 +4,7 @@ from .models import Pet, Product, ProductRequest
 from rest_framework import status
 from rest_framework.response import Response
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = User
@@ -20,10 +21,12 @@ class PetSerializer(serializers.ModelSerializer):
             photo_url = obj.fingerprint.url
             return request.build_absolute_uri(photo_url)  
 
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Product 
         fields = ('__all__')
+
 
 class ProductRequestSerializer(serializers.ModelSerializer):
     requestDate  = serializers.DateTimeField(format="%d-%m-%Y")

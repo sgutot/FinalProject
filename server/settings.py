@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    "django_extensions",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -135,7 +136,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Allow specific origin 
 CORS_ALLOWED_ORIGIN = [
-    "http://localhost:5173",
+    # "http://localhost:5173",
+    # "http://localhost:8888",
+    "https://0.0.0.0:8888"
 ]
 
 # Disable this in production

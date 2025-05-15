@@ -21,8 +21,9 @@ import paw_auth.views
 from .import views
 from .views import login, signup
 from .views import create_pet, pet_detail, petImage
-from .views import search_for_toxic_ingredients
-from .views import new_product_name, new_product_description, new_product_front_picture, new_product_ingredients_picture, new_product_requester, new_product_detail, status_new_product
+# from .views import search_for_toxic_ingredients
+from .views import new_product_name, new_product_description, new_product_front_picture, new_product_ingredients_picture, new_product_requester, new_product_detail, status_new_product, get_product
+
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -40,7 +41,9 @@ urlpatterns = [
     path('uploads/', petImage.as_view(),),
 
     #Scan
-    path('search_for_toxic_ingredients/', views.search_for_toxic_ingredients),
+    # path('search_for_toxic_ingredients/', views.search_for_toxic_ingredients),
+    path('scan/', views.get_product, name='get_product'),
+
 
     #New Product
     path('new_product_name/', new_product_name.as_view(), name="new_product_name"),

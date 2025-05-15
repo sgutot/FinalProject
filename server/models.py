@@ -8,6 +8,7 @@ class User(models.Model):
     def __str__(self):
        return self.name
 
+
 class Pet(models.Model):
     name = models.CharField(max_length=30)
     type = models.CharField(max_length=30)
@@ -17,13 +18,18 @@ class Pet(models.Model):
     def __str__(self):
         return self.name
 
+
 class Product(models.Model):
     name = models.CharField(max_length=30)
+    barcode = models.IntegerField(default=0)
     numGrams = models.IntegerField() 
     manufacturer = models.CharField(max_length=300)
     ingredients = models.CharField(max_length=300)
     frontPicture = models.ImageField(upload_to ='uploads/')
     backPicture = models.ImageField(upload_to ='uploads/')
+
+    def __str__(self):
+        return f"{self.name} ({self.barcode})"
    
 
 class ProductRequest(models.Model):
