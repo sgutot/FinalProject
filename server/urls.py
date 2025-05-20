@@ -44,7 +44,6 @@ urlpatterns = [
     # path('search_for_toxic_ingredients/', views.search_for_toxic_ingredients),
     path('scan/', views.get_product, name='get_product'),
 
-
     #New Product
     path('new_product_name/', new_product_name.as_view(), name="new_product_name"),
     path('new_product_description/', new_product_description.as_view()),
