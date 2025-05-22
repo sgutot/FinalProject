@@ -126,7 +126,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_ROOT = 'media'
 
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 
 # Default primary key field type
@@ -139,6 +143,7 @@ CORS_ALLOWED_ORIGIN = [
     # "http://localhost:5173",
     # "http://localhost:8888",
     "https://0.0.0.0:8888",
+    # "https://192.168.28.120:8888/"
 ]
 
 # Disable this in production

@@ -53,4 +53,4 @@ urlpatterns = [
     path('new_product_detail/<int:pk>/', new_product_detail.as_view()),
     path('status_new_product/',status_new_product.as_view())
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
