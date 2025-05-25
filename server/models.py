@@ -12,7 +12,7 @@ class User(models.Model):
 class Pet(models.Model):
     name = models.CharField(max_length=30)
     type = models.CharField(max_length=30)
-    DisplayIcon = models.ImageField(upload_to ='uploads/')
+    # DisplayIcon = models.ImageField(upload_to ='uploads/')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):

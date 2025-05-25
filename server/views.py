@@ -61,22 +61,22 @@ def test_token(request):
     return Response("passed for {}".format(request.user.email))
  
 
-# Pet
-class create_pet(generics.ListCreateAPIView):
-    serializer_class = PetSerializer
+# # Pet
+# class create_pet(generics.ListCreateAPIView):
+#     serializer_class = PetSerializer
 
-    def get_queryset(self):
-        queryset = Pet.objects.all()
-        User = self.request.query_params.get('User')
-        if User is not None:
-            queryset = queryset.filter(User)
-        return queryset
+#     def get_queryset(self):
+#         queryset = Pet.objects.all()
+#         User = self.request.query_params.get('User')
+#         if User is not None:
+#             queryset = queryset.filter(User)
+#         return queryset
 
 
-class pet_detail(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = PetSerializer
-    queryset = Pet.objects.all()
-    lookup_field = 'pk'
+# class pet_detail(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = PetSerializer
+#     queryset = Pet.objects.all()
+#     lookup_field = 'pk'
 
 
 class petImage(APIView):
@@ -265,3 +265,22 @@ class status_new_product(generics.UpdateAPIView):
         instance.save()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+
+
+class UserPetsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        print(type(request.user), request.user) 
+        user = request.user
+        pets = Pet.objects.filter(owner=user)
+        serializer = PetSerializer(pets, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = PetSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()  # owner is passed via context
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)

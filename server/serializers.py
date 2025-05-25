@@ -12,14 +12,19 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PetSerializer(serializers.ModelSerializer):
-    class Meta(object):
+    class Meta:
         model = Pet
-        fields = ('__all__')
+        fields = '__all__'
+        read_only_fields = ['id', 'owner', 'created_at']
 
-        def get_photo_urls(self, obj):
-            request = self.context.get('request')
-            photo_url = obj.fingerprint.url
-            return request.build_absolute_uri(photo_url)  
+    def create(self, validated_data):
+        request = self.context.get('request')
+        if request is None or not hasattr(request, 'user'):
+            raise serializers.ValidationError("Request with authenticated user is required.")
+
+        validated_data['owner'] = request.user
+        return super().create(validated_data)
+
 
 
 class ProductSerializer(serializers.ModelSerializer):
