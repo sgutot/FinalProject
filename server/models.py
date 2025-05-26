@@ -1,13 +1,5 @@
 from django.db import models
-
-class User(models.Model):
-    name = models.CharField(max_length=30)
-    email = models.EmailField(max_length=254)
-    contact = models.CharField(max_length=20)
-
-    def __str__(self):
-       return self.name
-
+from django.contrib.auth.models import User
 
 class Pet(models.Model):
     name = models.CharField(max_length=30)

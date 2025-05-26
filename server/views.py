@@ -15,7 +15,7 @@ from .serializers import UserSerializer, PetSerializer, ProductSerializer, Produ
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework import generics, permissions, status
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from .models import Pet, Product, ProductRequest
 from rest_framework.views import APIView
 from rest_framework.response import Response
