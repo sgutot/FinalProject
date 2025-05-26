@@ -15,7 +15,7 @@ from .serializers import UserSerializer, PetSerializer, ProductSerializer, Produ
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework import generics, permissions, status
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from .models import Pet, Product, ProductRequest
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -267,14 +267,22 @@ class status_new_product(generics.UpdateAPIView):
         return Response(serializer.data)
 
 
+from django.contrib.auth import get_user_model
 
 class UserPetsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         print(type(request.user), request.user) 
-        user = request.user
-        pets = Pet.objects.filter(owner=user)
+        
+        if request.user.is_authenticated:
+            User = get_user_model()
+            user = User.objects.get(username=str(request.user))
+            pets = Pet.objects.filter(owner=user)
+
+        else:
+            pets = Pet.objects.none()
+
         serializer = PetSerializer(pets, many=True)
         return Response(serializer.data)
 

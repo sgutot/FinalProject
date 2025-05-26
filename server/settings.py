@@ -138,14 +138,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# # Allow specific origin 
-# CORS_ALLOWED_ORIGIN = [
-#     # "http://localhost:5173",
-#     "http://localhost:8888",
-#     "https://0.0.0.0:8888/",
-#     "https://192.168.8.37:8888",
-#     # "https://192.168.28.120:8888/"
-# ]
+# Allow specific origin 
+CORS_ALLOWED_ORIGIN = [
+    # "http://localhost:5173",
+    "https://0.0.0.0:8888/",
+    
+    # "https://192.168.28.120:8888/"
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
