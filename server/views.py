@@ -72,8 +72,8 @@ class ProductRequestCreateView(APIView):
         data = request.data.copy()
         print(f"New Product Request! request data: {data}")
         data = request.data.copy()
-        # data['requester'] = request.user.username
-        # data['requestDate'] = timezone.now()
+        data['requester'] = request.user.username
+        data['requestDate'] = timezone.now()
 
         serializer = ProductRequestSerializer(data=data, context={'request': request})
         if serializer.is_valid():
