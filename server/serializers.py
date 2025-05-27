@@ -37,7 +37,7 @@ class ProductRequestSerializer(serializers.ModelSerializer):
     requestDate  = serializers.DateTimeField(format="%d-%m-%Y")
     class Meta(object):
         model = ProductRequest
-        fields = ('name', 'descrption', 'frontPicture', 'ingredientsPicture', 'requester', 'requestDate')
+        fields = ('name', 'description', 'frontPicture', 'ingredientsPicture', 'requester', 'requestDate')
         read_only_fields = ['id', 'requestDate', 'status']
 
         def get_front_photo_urls(self, obj):

@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import render
+from rest_framework import status, permissions, parsers
 
 # Scan
 from django.core.files.base import ContentFile
@@ -60,6 +61,25 @@ from rest_framework.permissions import IsAuthenticated
 def test_token(request):
     return Response("passed for {}".format(request.user.email))
  
+
+from django.utils import timezone
+
+class ProductRequestCreateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [parsers.MultiPartParser, parsers.FormParser]
+
+    def post(self, request, *args, **kwargs):
+        data = request.data.copy()
+        print(f"New Product Request! request data: {data}")
+        data = request.data.copy()
+        # data['requester'] = request.user.username
+        # data['requestDate'] = timezone.now()
+
+        serializer = ProductRequestSerializer(data=data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Request submitted successfully"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # # Pet
 # class create_pet(generics.ListCreateAPIView):
@@ -292,3 +312,4 @@ class UserPetsView(APIView):
             serializer.save()  # owner is passed via context
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+

@@ -24,6 +24,7 @@ from .views import login, signup
 # from .views import search_for_toxic_ingredients
 from .views import new_product_name, new_product_description, new_product_front_picture, new_product_ingredients_picture, new_product_requester, new_product_detail, status_new_product, get_product
 from .views import UserPetsView
+from .views import ProductRequestCreateView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -53,5 +54,6 @@ urlpatterns = [
     path('new_product_detail/<int:pk>/', new_product_detail.as_view()),
     path('status_new_product/',status_new_product.as_view()),
     path('my_pets/', UserPetsView.as_view(), name='my_pets'),
+    path('new_product_request/', ProductRequestCreateView.as_view(), name='new_product_request'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

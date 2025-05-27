@@ -26,7 +26,7 @@ class Product(models.Model):
 
 class ProductRequest(models.Model):
     name = models.CharField(max_length=30)
-    descrption = models.TextField(max_length=300)
+    description = models.TextField(max_length=300)
     frontPicture =  models.ImageField(upload_to ='uploads/')
     ingredientsPicture =  models.ImageField(upload_to ='uploads/')
     requester = models.CharField(max_length=30)

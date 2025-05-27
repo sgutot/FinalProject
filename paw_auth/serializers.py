@@ -28,7 +28,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductRequestSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = ProductRequest
-        fields = ['name', 'descrption', 'frontPicture', 'ingredientsPicture', 'requester']
+        fields = ['name', 'descrption', 'frontPicture', 'ingredientsPicture']
 
         def get_photo_urls(self, obj):
             request = self.context.get('request')
