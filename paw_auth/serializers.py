@@ -25,14 +25,14 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['name']
 
-class ProductRequestSerializer(serializers.ModelSerializer):
-    class Meta(object):
-        model = ProductRequest
-        fields = ['name', 'descrption', 'frontPicture', 'ingredientsPicture', 'requester']
+# class ProductRequestSerializer(serializers.ModelSerializer):
+#     class Meta(object):
+#         model = ProductRequest
+#         fields = ['name', 'descrption', 'frontPicture', 'ingredientsPicture']
 
-        def get_photo_urls(self, obj):
-            request = self.context.get('request')
-            photo_url = obj.fingerprint.url
-            return request.build_absolute_uri(photo_url)
+#         def get_photo_urls(self, obj):
+#             request = self.context.get('request')
+#             photo_url = obj.fingerprint.url
+#             return request.build_absolute_uri(photo_url)
 
     

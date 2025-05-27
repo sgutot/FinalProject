@@ -20,9 +20,11 @@ from django.urls import include, path
 import paw_auth.views
 from .import views
 from .views import login, signup
-from .views import create_pet, pet_detail, petImage
-from .views import search_for_toxic_ingredients
-from .views import new_product_name, new_product_description, new_product_front_picture, new_product_ingredients_picture, new_product_requester, new_product_detail, status_new_product
+# from .views import create_pet, pet_detail, petImage
+# from .views import search_for_toxic_ingredients
+from .views import new_product_name, new_product_description, new_product_front_picture, new_product_ingredients_picture, new_product_requester, new_product_detail, status_new_product, get_product
+from .views import UserPetsView
+from .views import ProductRequestCreateView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -35,12 +37,13 @@ urlpatterns = [
     path('paw_auth/', include('paw_auth.urls')),
 
     #Pet
-    path('create_pet/', create_pet.as_view(), name="create_pet"),
-    path('pet_detail/<int:pk>/', pet_detail.as_view()),
-    path('uploads/', petImage.as_view(),),
+    # path('create_pet/', create_pet.as_view(), name="create_pet"),
+    # path('pet_detail/<int:pk>/', pet_detail.as_view()),
+    # path('uploads/', petImage.as_view(),),
 
     #Scan
-    path('search_for_toxic_ingredients/', views.search_for_toxic_ingredients),
+    # path('search_for_toxic_ingredients/', views.search_for_toxic_ingredients),
+    path('scan/', views.get_product, name='get_product'),
 
     #New Product
     path('new_product_name/', new_product_name.as_view(), name="new_product_name"),
@@ -49,6 +52,8 @@ urlpatterns = [
     path('uploads/', new_product_ingredients_picture.as_view(),),
     path('new_product_requester/', new_product_requester.as_view()),
     path('new_product_detail/<int:pk>/', new_product_detail.as_view()),
-    path('status_new_product/',status_new_product.as_view())
+    path('status_new_product/',status_new_product.as_view()),
+    path('my_pets/', UserPetsView.as_view(), name='my_pets'),
+    path('new_product_request/', ProductRequestCreateView.as_view(), name='new_product_request'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

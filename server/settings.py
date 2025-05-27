@@ -26,12 +26,13 @@ SECRET_KEY = 'django-insecure-pw)*4+v@*lpals=07h^nr=mti6(h4g66%gz)5v)1v#tlooy=a9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "django_extensions",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,7 +126,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_ROOT = 'media'
 
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 
 # Default primary key field type
@@ -135,8 +140,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Allow specific origin 
 CORS_ALLOWED_ORIGIN = [
-    "http://localhost:5173",
+    # "http://localhost:5173",
+    "https://0.0.0.0:8888/",
+    "https://192.168.138.120:8000/"
+    "https://192.168.8.37:8888/",
+    # "https://192.168.28.120:8888/"
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        # other authentication classes if any
+    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
+}
+
 
 # Disable this in production
 CORS_ALLOW_ALL_ORIGINS = True

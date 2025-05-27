@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: Debug run_https.py",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/run_https.py",
+        "console": "integratedTerminal"
+      }
+    ]
+  }
+  
